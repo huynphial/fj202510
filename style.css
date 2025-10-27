@@ -1,11 +1,26 @@
 /* ========== GRID GALLERY ========== */
 #gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* 3 cột desktop */
+  gap: 12px; /* giảm khoảng cách */
   margin-top: 20px;
+  padding: 0 10px;
 }
 
+/* Responsive layout */
+@media (max-width: 1024px) {
+  #gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  #gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========== CARD ========== */
 .card {
   background: #fff;
   border-radius: 12px;
@@ -23,12 +38,13 @@
 /* ========== IMAGE ========== */
 .card img {
   width: 100%;
-  height: 220px;
-  object-fit: cover;
+  height: auto; /* giữ nguyên tỉ lệ ảnh */
   display: block;
+  object-fit: contain; /* đảm bảo ảnh không bị crop */
+  background-color: #f8f8f8; /* nền nhẹ nếu ảnh không full */
 }
 
-/* ========== BASIC INFO ========== */
+/* ========== INFO ========== */
 .card .info {
   padding: 10px;
   font-size: 14px;
@@ -45,11 +61,7 @@
   color: #666;
 }
 
-.card .lens-line {
-  margin-top: 3px;
-}
-
-/* ========== DETAIL INFO ========== */
+/* ========== DETAIL ========== */
 .card .detail {
   max-height: 0;
   overflow: hidden;
@@ -61,95 +73,13 @@
   padding: 0 12px;
 }
 
-.card .detail div {
-  margin: 4px 0;
-}
-
-/* Khi hover hoặc class show-detail được bật (click/touch) */
 .card:hover .detail,
 .card .detail.show-detail {
-  max-height: 300px;  /* có thể điều chỉnh tùy số dòng */
+  max-height: 300px;
   padding: 10px 12px;
 }
 
-/* ========== PAGINATION ========== */
-#pagination {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 25px;
-  gap: 5px;
-}
-
-#pagination button {
-  border: 1px solid #ddd;
-  background: #fff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-#pagination button:hover {
-  background: #f0f0f0;
-}
-
-#pagination button.active {
-  background: #0078d7;
-  color: #fff;
-  border-color: #0078d7;
-}
-
-#pagination .dots {
-  align-self: center;
-  color: #666;
-}
-
-.jump-box {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-left: 10px;
-}
-
-/* ========== MODAL ========== */
-#modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-#modal .content {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  max-width: 90%;
-  max-height: 90%;
-  overflow-y: auto;
-}
-
-#modal img {
-  max-width: 100%;
-  display: block;
-  border-radius: 6px;
-  margin-bottom: 10px;
-}
-
-#closeModal {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 22px;
-  cursor: pointer;
-  color: white;
-}
-
-
-/* --- Button Container --- */
+/* ========== BUTTONS ========== */
 .button-box {
   position: absolute;
   bottom: 10px;
@@ -161,7 +91,6 @@
   transform: translateY(8px);
 }
 
-/* Chỉ hiện khi hover card */
 .card:hover .button-box {
   opacity: 1;
   transform: translateY(0);
@@ -176,13 +105,12 @@
   border-radius: 50%;
   cursor: pointer;
   color: white;
-  font-size: 14px;
-  font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s ease, background 0.3s ease;
+  font-size: 0;
 }
 
 /* Nút Save */
@@ -193,6 +121,10 @@
   transform: scale(1.1);
   background: linear-gradient(145deg, #1e90ff, #0060b6);
 }
+.save-btn::before {
+  content: "💾";
+  font-size: 18px;
+}
 
 /* Nút Open */
 .open-btn {
@@ -202,18 +134,7 @@
   transform: scale(1.1);
   background: linear-gradient(145deg, #34c759, #1e9a3c);
 }
-
-/* Biểu tượng đẹp hơn */
-.save-btn::before {
-  content: "💾";
-  font-size: 18px;
-}
 .open-btn::before {
   content: "🔗";
   font-size: 18px;
-}
-
-/* Nếu muốn gọn hơn (ẩn icon text cũ) */
-.save-btn, .open-btn {
-  font-size: 0;
 }
